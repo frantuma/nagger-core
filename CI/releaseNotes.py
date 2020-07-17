@@ -23,11 +23,9 @@ def readUrl(name):
     global GH_BASE_URL
 
     try:
-        #base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
-        print "url " + GH_BASE_URL + name
-        print "c " + GH_CRED_64
+        base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
         request = urllib2.Request(GH_BASE_URL + name)
-        request.add_header("Authorization", "Basic %s" % GH_CRED_64)
+        request.add_header("Authorization", "Basic %s" % base64string)
         content = urllib2.urlopen(request).read()
         jcont = json.loads(content)
         # clear file with exception count
@@ -50,9 +48,9 @@ def postUrl(name, body):
     global GH_BASE_URL
     try:
         time.sleep(0.05)
-        #base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
+        base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
         request = urllib2.Request(GH_BASE_URL + name)
-        request.add_header("Authorization", "Basic %s" % GH_CRED_64)
+        request.add_header("Authorization", "Basic %s" % base64string)
         request.add_header("Accept", "application/vnd.github.v3+json")
         content = urllib2.urlopen(request, body).read()
         jcont = json.loads(content)
@@ -77,9 +75,9 @@ def invoke(name, body, method):
     global GH_BASE_URL
 
     try:
-        #base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
+        base64string = base64.b64encode('%s:%s' % (GH_USER, GH_TOKEN))
         request = urllib2.Request(GH_BASE_URL + name)
-        request.add_header("Authorization", "Basic %s" % GH_CRED_64)
+        request.add_header("Authorization", "Basic %s" % base64string)
         content = urllib2.urlopen(request).read()
         # clear file with exception count
         return content;

@@ -89,15 +89,3 @@ cd ./modules/swagger-gradle-plugin
 ./gradlew build --info
 cd ../..
 
-#####################
-### checkout branch prepare-release-2.x.x
-#####################
-
-#####################
-### add and commit to that branch
-#####################
-
-#####################
-### push PR
-#####################
-

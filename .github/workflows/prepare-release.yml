@@ -34,11 +34,7 @@ jobs:
           ${{ runner.os }}-maven-
     - name: Run prepare release script
       run: |
-        echo "GH_USER" ${GH_USER}
-        echo "GITHUB_USER" ${GITHUB_USER}
-        echo "SC_TEST" ${SC_TEST}
         export MY_POM_VERSION=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-        echo "POM VERSION" ${MY_POM_VERSION}
         if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
         then
            . ./CI/prepare-release.sh
@@ -47,14 +43,6 @@ jobs:
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
-    - name: test variables
-      run: |
-        echo "TEST GH_USER" ${GH_USER}
-        echo "TEST GITHUB_USER" ${GITHUB_USER}
-        echo "TEST SC_TEST" ${SC_TEST}
-        echo "TEST SC_VERSION" ${SC_VERSION}
-        echo "TEST SC_NEXT_VERSION" ${SC_NEXT_VERSION}
-        echo "TEST MY_POM_VERSION" ${MY_POM_VERSION}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
       with:
