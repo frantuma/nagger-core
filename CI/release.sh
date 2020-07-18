@@ -42,14 +42,14 @@ cd ../..
 #####################
 ### deploy maven release
 #####################
-./mvnw -B deploy --file pom.xml
-#./mvnw -B install --file pom.xml
+#./mvnw -B deploy --file pom.xml
+./mvnw -B install -Prelease --file pom.xml
 #####################
 ### deploy gradle plugin release
 #####################
 cd modules/swagger-gradle-plugin
-./gradlew publishPlugins --info
-#./gradlew build --info
+#./gradlew publishPlugins --info
+./gradlew build --info
 cd ../..
 #####################
 ### javadocs to ghpages ??? automatic???
