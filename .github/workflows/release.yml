@@ -40,6 +40,7 @@ jobs:
         # gpg --import --batch private.asc
         cat <(echo -e "$GPG_PRIVATE_KEY") | gpg --batch --import
         gpg --list-secret-keys --keyid-format LONG
+        cat ~/.gnupg/gpg.conf
     - name: Set up Gradle credentials
       run: |
         mkdir -p ~/.gradle
