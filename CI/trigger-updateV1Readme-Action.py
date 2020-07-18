@@ -99,59 +99,17 @@ def invoke(name, body, method):
 def pretty(jcont):
     return json.dumps(jcont, sort_keys=True, indent=4, separators=(',', ': '))
 
-
-def allPulls(releaseDate):
-
-    result = ""
-
-    baseurl = "https://api.github.com/repos/frantuma/nagger-core/pulls/"
-    content = readUrl('repos/frantuma/nagger-core/pulls?state=closed&base=master&per_page=100')
-    for l in content:
-      stripped = l["url"][len(baseurl):]
-      mergedAt = l["merged_at"]
-      if mergedAt is not None:
-          if datetime.strptime(mergedAt, '%Y-%m-%dT%H:%M:%SZ') > releaseDate:
-              if not l['title'].startswith("bump snap"):
-                result += '\n'
-                result += "* " + l['title'] + " (#" + stripped + ")"
-    return result
-
-
-def lastReleaseDate(tag):
-    content = readUrl('repos/frantuma/nagger-core/releases/tags/' + tag)
-    publishedAt = content["published_at"]
-    return datetime.strptime(publishedAt, '%Y-%m-%dT%H:%M:%SZ')
-
-
-def addRelease(release_title, tag, content):
-    payload = "{\"tag_name\":\"" + tag + "\", "
-    payload += "\"name\":" + json.dumps(release_title) + ", "
-    payload += "\"body\":" + json.dumps(content) + ", "
-    payload += "\"draft\":" + "true" + ", "
-    payload += "\"prerelease\":" + "false" + ", "
-    payload += "\"target_commitish\":\"" + "master" + "\"}"
-    content = postUrl('repos/frantuma/nagger-core/releases', payload)
+def trigger_updateV1Readme_action(prevV2Release, lastV2Release):
+    wId = ""
+    payload = "{\"ref\":\"" + "\"1.5\"" + "\", "
+    payload += "\"inputs\":" + "{\"V2_PREV_RELEASE\": \"" + prevV2Release +"\", \"V2_LAST_RELEASE\": \"" + lastV2Release +"\"}}"
+    content = postUrl('repos/frantuma/nagger-core/actions/workflows/updateV1Readme.yml/dispatches', payload)
     return content
-
-def getReleases():
-    content = readUrl('repos/frantuma/nagger-core/releases')
-    return content
-
-def deleteRelease():
-    #curl \
-    #-X DELETE \
-    #   -H "Accept: application/vnd.github.v3+json" \
-    #      -H "Authorization: Basic ZZZZZ" \
-    #        https://api.github.com/repos/frantuma/nagger-core/releases/28636190
-    print "delete release"
 
 
 # main
-def main(last_release, release_title, tag):
-
-
-    result = allPulls(lastReleaseDate('v' + last_release))
-    addRelease (release_title, tag, result)
+def main(prevV2Release, lastV2Release):
+    trigger_updateV1Readme_action (prevV2Release, lastV2Release)
 
 # here start main
-main(sys.argv[1], sys.argv[2], sys.argv[3])
+main(sys.argv[1], sys.argv[2])

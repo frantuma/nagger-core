@@ -43,13 +43,11 @@ cd ../..
 ### deploy maven release
 #####################
 ./mvnw -B deploy --file pom.xml
-#./mvnw -B install --file pom.xml
 #####################
 ### deploy gradle plugin release
 #####################
 cd modules/swagger-gradle-plugin
 ./gradlew publishPlugins --info
-#./gradlew build --info
 cd ../..
 #####################
 ### javadocs to ghpages ??? automatic???
@@ -82,6 +80,10 @@ sc_find="name: 'swagger-jaxrs2', version:'$SC_VERSION"
 sc_replace="name: 'swagger-jaxrs2', version:'$SC_NEXT_VERSION-SNAPSHOT"
 sed -i -e "s/$sc_find/$sc_replace/g" $CUR/modules/swagger-gradle-plugin/src/test/java/io/swagger/v3/plugins/gradle/SwaggerResolveTest.java
 
+
+#####################
+### update 1.5 readme and do PR. merge PR?
+#####################
 
 #####################
 ### update wiki links

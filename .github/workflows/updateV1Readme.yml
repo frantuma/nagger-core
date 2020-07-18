@@ -1,0 +1,61 @@
+name: Update V1 Readme
+
+on: workflow_dispatch
+  branches:
+    - 1.5
+  inputs:
+    V2_PREV_RELEASE:
+      description: 'previous than last release version for swagger 2.x'
+      required: true
+    V2_NEW_RELEASE:
+      description: 'last release version for swagger 2.x'
+      required: true
+jobs:
+  updateV1Readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 1.5
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Set up Java 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Run update 1.5 readme script
+        id: updateV1Readme
+        run: |
+          . ./CI/updateV1Readme.sh ${{ github.event.inputs.V2_PREV_RELEASE }} ${{ github.event.inputs.V2_NEW_RELEASE }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          commit-message: update README with 2 V2 release ${{ github.event.inputs.V2_NEW_RELEASE }}
+          title: 'update README with 2 V2 release ${{ github.event.inputs.V2_NEW_RELEASE }}'
+          branch: update-readme-v2-version-${{ github.event.inputs.V2_NEW_RELEASE }}
+    env:
+      MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+      GH_USER: ${{ secrets.GH_USER }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_USER: ${{ secrets.GITHUB_USER }}
+      SC_TEST: ${{ secrets.SC_TEST }}
+      GH_CRED_64: ${{ secrets.GH_CRED_64 }}
+      SC_VERSION:
+      SC_NEXT_VERSION:
+

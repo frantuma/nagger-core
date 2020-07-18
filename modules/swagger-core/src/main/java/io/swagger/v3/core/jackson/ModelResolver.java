@@ -545,7 +545,7 @@ public class ModelResolver extends AbstractModelConverter implements ModelConver
             }
 
             // hack to avoid clobbering properties with get/is names
-            // it's ugly but gets around https://github.com/swagger-api/swagger-core/issues/415
+            // it's ugly but gets around https://github.com/frantuma/nagger-core/issues/415
             if(propDef.getPrimaryMember() != null) {
                 final JsonProperty jsonPropertyAnn = propDef.getPrimaryMember().getAnnotation(JsonProperty.class);
                 if (jsonPropertyAnn == null || !jsonPropertyAnn.value().equals(propName)) {

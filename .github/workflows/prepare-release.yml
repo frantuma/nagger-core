@@ -1,6 +1,8 @@
 name: Prepare_Release
 
-on: [workflow_dispatch]
+on: workflow_dispatch
+  branches:
+    - master
 
 jobs:
   build:
@@ -33,18 +35,22 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Run prepare release script
+      id: prepare-release
       run: |
         export MY_POM_VERSION=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
         if [[ $MY_POM_VERSION =~ ^.*SNAPSHOT$ ]];
         then
-           . ./CI/prepare-release.sh
+          . ./CI/prepare-release.sh
+          echo "::set-env name=PREPARE_RELEASE_OK::yes"
         else
-            echo "not preparing release for release version: " ${MY_POM_VERSION}
+          echo "not preparing release for release version: " ${MY_POM_VERSION}
+          echo "::set-env name=PREPARE_RELEASE_OK::no"
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
+      if: env.PREPARE_RELEASE_OK == 'yes'
       with:
         token: ${{ steps.generate-token.outputs.token }}
         commit-message: prepare release ${{ env.SC_VERSION }}
