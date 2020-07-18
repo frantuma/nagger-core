@@ -2,7 +2,7 @@ name: Update V1 Readme
 
 on: workflow_dispatch
   branches:
-    - 1.5
+    - "1.5"
   inputs:
     V2_PREV_RELEASE:
       description: 'previous than last release version for swagger 2.x'
