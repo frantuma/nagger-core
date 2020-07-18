@@ -31,7 +31,7 @@ SC_RELEASE_TAG="v$SC_VERSION"
 #####################
 ### build and test maven ###
 #####################
-./mvnw -B install --file pom.xml
+./mvnw --no-transfer-progress -B install --file pom.xml
 
 #####################
 ### build and test gradle ###
@@ -43,8 +43,8 @@ cd ../..
 #####################
 ### deploy maven release
 #####################
-#./mvnw -Dgpg.passphrase=${GPG_PASSPHRASE} -B deploy --file pom.xml
-./mvnw -B install -Prelease --file pom.xml
+#./mvnw -Dgpg.passphrase=${GPG_PASSPHRASE} --no-transfer-progress -B deploy -Prelease --file pom.xml
+./mvnw --no-transfer-progress -B install -Prelease --file pom.xml
 #####################
 ### deploy gradle plugin release
 #####################

@@ -80,7 +80,7 @@ sed -i -e "s/$sc_find/$sc_replace/g" $CUR/modules/swagger-gradle-plugin/src/test
 #####################
 ### build and test maven ###
 #####################
-./mvnw -B install --file pom.xml
+./mvnw --no-transfer-progress -B install --file pom.xml
 
 #####################
 ### build and test gradle ###
