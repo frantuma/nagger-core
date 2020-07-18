@@ -1,8 +1,6 @@
 name: Update V1 Readme
 
 on: workflow_dispatch
-  branches:
-    - "1.5"
   inputs:
     V2_PREV_RELEASE:
       description: 'previous than last release version for swagger 2.x'
@@ -10,6 +8,8 @@ on: workflow_dispatch
     V2_NEW_RELEASE:
       description: 'last release version for swagger 2.x'
       required: true
+  branches: ["1.5"]
+
 jobs:
   updateV1Readme:
     runs-on: ubuntu-latest
