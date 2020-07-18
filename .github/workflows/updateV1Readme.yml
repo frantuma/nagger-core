@@ -42,7 +42,7 @@ jobs:
         id: updateV1Readme
         run: |
           . ./CI/updateV1Readme.sh ${{ github.event.inputs.V2_PREV_RELEASE }} ${{ github.event.inputs.V2_NEW_RELEASE }}
-      - name: Create Pull Request
+      - name: Create Update Readme Pull Request
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ steps.generate-token.outputs.token }}
