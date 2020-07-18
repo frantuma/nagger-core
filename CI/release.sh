@@ -14,6 +14,7 @@ SC_LAST_RELEASE=2.1.3
 ##################################
 
 
+echo "GPG_PASSPHRASE $GPG_PASSPHRASE"
 echo "GHUSER $GH_USER"
 echo "version $SC_VERSION"
 echo "qual $SC_QUALIFIER"
@@ -42,7 +43,7 @@ cd ../..
 #####################
 ### deploy maven release
 #####################
-#./mvnw -B deploy --file pom.xml
+#./mvnw -Dgpg.passphrase=${GPG_PASSPHRASE} -B deploy --file pom.xml
 ./mvnw -B install -Prelease --file pom.xml
 #####################
 ### deploy gradle plugin release
