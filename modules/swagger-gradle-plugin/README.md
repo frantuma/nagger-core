@@ -7,7 +7,7 @@
 
 ```
 plugins {
-  id "ft.nagger.core.v3.swagger-gradle-plugin" version "2.1.3"
+  id "ft.nagger.core.v3.swagger-gradle-plugin" version "2.1.4"
 }
 ```
 ### Gradle 1.x and 2.0
@@ -24,7 +24,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "ft.nagger.core.v3:swagger-gradle-plugin:2.1.3"
+    classpath "ft.nagger.core.v3:swagger-gradle-plugin:2.1.4"
   }
 }
 
