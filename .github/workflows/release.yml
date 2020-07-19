@@ -57,7 +57,9 @@ jobs:
       run: |
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
-    - name: Release Maven package
+        git config --global hub.protocol https
+        git remote set-url origin https://\${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/''' + 'frantuma/nagger-core' + '''.git
+    - name: Run maven deploy/release (action-maven-publish)
       uses: samuelmeuli/action-maven-publish@v1
       if: env.RELEASE_OK == 'yes'
       with:
