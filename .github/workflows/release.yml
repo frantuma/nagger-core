@@ -38,13 +38,6 @@ jobs:
       run: |
         mkdir -p ~/.gradle
         echo "gradle.publish.key=$GRADLE_PUBLISH_KEY\ngradle.publish.secret=$GRADLE_PUBLISH_SECRET" > ~/.gradle/gradle.properties
-    - name: Set up git creds
-      uses: oleksiyrudenko/gha-git-credentials@v1
-      with:
-        token: '${{ secrets.GITHUB_TOKEN }}'
-        name: 'frantuma'
-        email: 'frantuma@yahoo.com'
-        actor: 'frantuma'
     - name: Run release script
       id: release
       run: |
@@ -69,6 +62,9 @@ jobs:
         nexus_username: ${{ secrets.OSSRH_USERNAME }}
         nexus_password: ${{ secrets.OSSRH_TOKEN }}
         maven_profiles: "release"
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
     - name: Run post release script
       id: postRelease
       if: env.RELEASE_OK == 'yes'
