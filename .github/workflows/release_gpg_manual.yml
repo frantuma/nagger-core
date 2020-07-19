@@ -34,6 +34,14 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+    - name: Set up GPG
+      run: |
+        # echo "$GPG_PRIVATE_KEY" > private.asc
+        # gpg --import --batch private.asc
+        cat <(echo -e "$GPG_PRIVATE_KEY") | gpg --batch --import
+        # gpg --list-secret-keys --keyid-format LONG
+        # ls -la ~/.gnupg
+        # cat ~/.gnupg/gpg.conf
     - name: Set up Gradle credentials
       run: |
         mkdir -p ~/.gradle
@@ -53,20 +61,6 @@ jobs:
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
-    - name: Release Maven package
-      uses: samuelmeuli/action-maven-publish@v1
-      if: env.RELEASE_OK == 'yes'
-      with:
-        gpg_private_key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY_NO_ESCAPE }}
-        gpg_passphrase: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
-        nexus_username: ${{ secrets.OSSRH_USERNAME }}
-        nexus_password: ${{ secrets.OSSRH_TOKEN }}
-        maven_profiles: "release"
-    - name: Run post release script
-      id: postRelease
-      if: env.RELEASE_OK == 'yes'
-      run: |
-        . ./CI/post-release.sh
     - name: Create Next Snapshot Pull Request
       uses: peter-evans/create-pull-request@v2
       if: env.RELEASE_OK == 'yes'
@@ -91,8 +85,7 @@ jobs:
       GH_CRED_64: ${{ secrets.GH_CRED_64 }}
       SC_VERSION:
       SC_NEXT_VERSION:
-      GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY_NO_ESCAPE }}
-      GPG_PRIVATE_KEY_ESCAPE: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+      GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
       GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
       GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
