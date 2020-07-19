@@ -31,7 +31,16 @@ SC_RELEASE_TAG="v$SC_VERSION"
 ### publish javadocs
 #####################
 cd modules/swagger-annotations
-../../mvnw scm-publish:publish-scm -Dscmpublish.username="${GH_USER}"  -Dscmpublish.password="${GH_TOKEN}"
+../../mvnw scm-publish:publish-scm \
+  -Dscmpublish.username="${GH_USER}" \
+  -Dscmpublish.password="${GH_TOKEN}" \
+  -Dscmpublish.skipDeletedFiles=true \
+  -Dscmpublish.checkoutDirectory=target/scmpublish \
+  -Dscmpublish.checkinComment=Publishing javadoc for swagger-annotations:$SC_VERSION \
+  -Dscmpublish.content=target/jvadocprep \
+  -Dscmpublish.pubScmUrl=scm:git:https://github.com/frantuma/nagger-core \
+  -Dscmpublish.scmBranch=gh-pages
+
 cd ../..
 #####################
 ### deploy gradle plugin release
