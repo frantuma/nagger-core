@@ -38,8 +38,8 @@ jobs:
       run: |
         mkdir -p ~/.gradle
         echo "gradle.publish.key=$GRADLE_PUBLISH_KEY\ngradle.publish.secret=$GRADLE_PUBLISH_SECRET" > ~/.gradle/gradle.properties
-    - name: Run release script
-      id: release
+    - name: Run pre release script
+      id: preRelease
       run: |
         # export GPG_TTY=$(tty)
         export MY_POM_VERSION=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${projects.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
@@ -48,11 +48,15 @@ jobs:
           echo "not releasing snapshot version: " ${MY_POM_VERSION}
           echo "::set-env name=RELEASE_OK::no"
         else
-          . ./CI/release.sh
+          . ./CI/pre-release.sh
           echo "::set-env name=RELEASE_OK::yes"
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
+    - name: configure git user email
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
     - name: Release Maven package
       uses: samuelmeuli/action-maven-publish@v1
       if: env.RELEASE_OK == 'yes'
@@ -62,9 +66,6 @@ jobs:
         nexus_username: ${{ secrets.OSSRH_USERNAME }}
         nexus_password: ${{ secrets.OSSRH_TOKEN }}
         maven_profiles: "release"
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
     - name: Run post release script
       id: postRelease
       if: env.RELEASE_OK == 'yes'
