@@ -55,8 +55,8 @@ jobs:
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
     - name: configure git user email
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
     - name: Release Maven package
       uses: samuelmeuli/action-maven-publish@v1
       if: env.RELEASE_OK == 'yes'
