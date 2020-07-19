@@ -87,7 +87,7 @@
                             <pubScmUrl>scm:git:https://github.com/frantuma/nagger-core</pubScmUrl>
                             <scmBranch>gh-pages</scmBranch>
                         </configuration>
-                        <executions>
+<!--                        <executions>
                             <execution>
                                 <id>publish-javadocs</id>
                                 <phase>deploy</phase>
@@ -95,7 +95,7 @@
                                     <goal>publish-scm</goal>
                                 </goals>
                             </execution>
-                        </executions>
+                        </executions>-->
                     </plugin>
                 </plugins>
             </build>

@@ -28,6 +28,12 @@ BASEDIR="$SCRIPTDIR/../"
 SC_RELEASE_TAG="v$SC_VERSION"
 
 #####################
+### publish javadocs
+#####################
+cd modules/swagger-annotations
+./mvnw scm-publish:publish-scm -Dscmpublish.username="${GH_USER}"  -Dscmpublish.password="${GH_TOKEN}"
+cd ../..
+#####################
 ### deploy gradle plugin release
 #####################
 cd modules/swagger-gradle-plugin
