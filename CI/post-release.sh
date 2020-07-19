@@ -37,7 +37,7 @@ cd modules/swagger-annotations
   -Dscmpublish.skipDeletedFiles=true \
   -Dscmpublish.checkoutDirectory=target/scmpublish \
   -Dscmpublish.checkinComment="Publishing javadoc for swagger-annotations:$SC_VERSION" \
-  -Dscmpublish.content=target/jvadocprep \
+  -Dscmpublish.content=target/javadocprep \
   -Dscmpublish.pubScmUrl=scm:git:https://github.com/frantuma/nagger-core \
   -Dscmpublish.scmBranch=gh-pages
 
