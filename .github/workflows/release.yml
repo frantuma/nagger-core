@@ -42,6 +42,9 @@ jobs:
       uses: oleksiyrudenko/gha-git-credentials@v1
       with:
         token: '${{ secrets.GITHUB_TOKEN }}'
+        name: 'frantuma'
+        email: 'frantuma@yahoo.com'
+        actor: 'frantuma'
     - name: Run release script
       id: release
       run: |
