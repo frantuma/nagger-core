@@ -38,6 +38,10 @@ jobs:
       run: |
         mkdir -p ~/.gradle
         echo "gradle.publish.key=$GRADLE_PUBLISH_KEY\ngradle.publish.secret=$GRADLE_PUBLISH_SECRET" > ~/.gradle/gradle.properties
+    - name: Set up git creds
+      uses: oleksiyrudenko/gha-git-credentials@v1
+      with:
+        token: '${{ secrets.GITHUB_TOKEN }}'
     - name: Run release script
       id: release
       run: |
