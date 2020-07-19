@@ -31,7 +31,7 @@ SC_RELEASE_TAG="v$SC_VERSION"
 ### publish javadocs
 #####################
 cd modules/swagger-annotations
-../../mvnw scm-publish:publish-scm \
+../../mvnw org.apache.maven.plugins:maven-scm-publish-plugin:publish-scm \
   -Dscmpublish.username="${GH_USER}" \
   -Dscmpublish.password="${GH_TOKEN}" \
   -Dscmpublish.skipDeletedFiles=true \
