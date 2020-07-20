@@ -41,6 +41,6 @@ mkdir -p $CUR/swagger-core/${SC_RELEASE_TAG}
 cp -aR $TMPDIR/apidocs $CUR/swagger-core/${SC_RELEASE_TAG}
 ls $CUR/swagger-core/${SC_RELEASE_TAG}
 ls $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs
-#git add -A
-#git commit -m "apidocs for release ${SC_RELEASE_TAG}"
+git add -A
+git commit -m "apidocs for release ${SC_RELEASE_TAG}"
 #git checkout master
