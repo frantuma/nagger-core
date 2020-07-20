@@ -24,6 +24,7 @@ echo "next $SC_NEXT_VERSION"
 CUR=$(pwd)
 SCRIPTDIR="$(dirname -- "${0}")/"
 BASEDIR="$SCRIPTDIR/../"
+TMPDIR="$(dirname -- "${0}")/_temp"
 
 SC_RELEASE_TAG="v$SC_VERSION"
 
@@ -41,10 +42,13 @@ ls $CUR/modules/swagger-annotations/target
 ls $CUR/modules/swagger-annotations/target/javadocprep
 ls $CUR/modules/swagger-annotations/target/javadocprep/swagger-core
 
-#git checkout gh-pages
+cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/apidocs $TMPDIR
 
-#mkdir -p $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs
-#cp -a $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/ $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs/
+git checkout gh-pages
+
+mkdir -p $CUR/swagger-core/${SC_RELEASE_TAG}
+cp -aR $TMPDIR/apidocs $CUR/swagger-core/${SC_RELEASE_TAG}
+ls $CUR/swagger-core/${SC_RELEASE_TAG}
 #git add -A
 #git commit -m "apidocs for release ${SC_RELEASE_TAG}"
 #git checkout master
