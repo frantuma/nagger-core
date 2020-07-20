@@ -61,6 +61,13 @@ git checkout master
 #   -Dscmpublish.scmBranch=gh-pages
 
 #cd ../..
+
+#####################
+### update wiki
+#####################
+
+
+
 #####################
 ### deploy gradle plugin release
 #####################
@@ -68,9 +75,6 @@ cd modules/swagger-gradle-plugin
 #./gradlew publishPlugins --info
 ./gradlew build --info
 cd ../..
-#####################
-### javadocs to ghpages ??? automatic???
-#####################
 
 #####################
 ### publish pre-prepared release (tag is created)

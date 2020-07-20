@@ -39,11 +39,12 @@ git diff
 
 ls $CUR/modules/swagger-annotations/target
 ls $CUR/modules/swagger-annotations/target/javadocprep
+ls $CUR/modules/swagger-annotations/target/javadocprep/swagger-core
 
 #git checkout gh-pages
 
 #mkdir -p $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs
-#cp -a $CUR/modules/swagger-annotations/target/javadocprep/ $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs/
+#cp -a $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/ $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs/
 #git add -A
 #git commit -m "apidocs for release ${SC_RELEASE_TAG}"
 #git checkout master
