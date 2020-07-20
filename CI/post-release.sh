@@ -42,7 +42,7 @@ ls $CUR/modules/swagger-annotations/target
 ls $CUR/modules/swagger-annotations/target/javadocprep
 ls $CUR/modules/swagger-annotations/target/javadocprep/swagger-core
 
-cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/${SC_RELEASE_TAG}/apidocs $TMPDIR
+cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/${SC_VERSION}/apidocs $TMPDIR
 
 git checkout gh-pages
 
