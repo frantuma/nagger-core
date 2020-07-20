@@ -42,4 +42,5 @@ ls $CUR/modules/swagger-annotations/target/javadocprep
 ls $CUR/modules/swagger-annotations/target/javadocprep/swagger-core
 
 cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/${SC_VERSION}/apidocs $TMPDIR
+cp -a $CUR/CI/publish-javadocs.sh $TMPDIR/publish-javadocs.sh
 
