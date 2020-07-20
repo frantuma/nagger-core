@@ -53,6 +53,7 @@ jobs:
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
+        echo "::set-env name=SC_LAST_RELEASE::$SC_LAST_RELEASE"
     - name: configure git user email
       run: |
         git config --global user.email "action@github.com"
@@ -68,6 +69,22 @@ jobs:
         nexus_username: ${{ secrets.OSSRH_USERNAME }}
         nexus_password: ${{ secrets.OSSRH_TOKEN }}
         maven_profiles: "release"
+    - name: Run prepare javadocs script
+      id: prepareJavadocs
+      if: env.RELEASE_OK == 'yes'
+      run: |
+        . ./CI/prepare-javadocs.sh
+    - name: Checkout gh-pages
+      uses: actions/checkout@v2
+      ref: "gh-pages"
+    - name: Run publish javadocs script
+      id: publishJavadocs
+      if: env.RELEASE_OK == 'yes'
+      run: |
+        . ./CI/publish-javadocs.sh
+    - name: Checkout master
+      uses: actions/checkout@v2
+      ref: "master"
     - name: Run post release script
       id: postRelease
       if: env.RELEASE_OK == 'yes'
