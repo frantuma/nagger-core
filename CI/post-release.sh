@@ -42,13 +42,14 @@ ls $CUR/modules/swagger-annotations/target
 ls $CUR/modules/swagger-annotations/target/javadocprep
 ls $CUR/modules/swagger-annotations/target/javadocprep/swagger-core
 
-cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/apidocs $TMPDIR
+cp -aR $CUR/modules/swagger-annotations/target/javadocprep/swagger-core/${SC_RELEASE_TAG}/apidocs $TMPDIR
 
 git checkout gh-pages
 
 mkdir -p $CUR/swagger-core/${SC_RELEASE_TAG}
 cp -aR $TMPDIR/apidocs $CUR/swagger-core/${SC_RELEASE_TAG}
 ls $CUR/swagger-core/${SC_RELEASE_TAG}
+ls $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs
 #git add -A
 #git commit -m "apidocs for release ${SC_RELEASE_TAG}"
 #git checkout master
