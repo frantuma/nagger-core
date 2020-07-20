@@ -24,7 +24,7 @@ echo "next $SC_NEXT_VERSION"
 CUR=$(pwd)
 SCRIPTDIR="$(dirname -- "${0}")/"
 BASEDIR="$SCRIPTDIR/../"
-TMPDIR="$(dirname -- "${0}")/_temp"
+TMPDIR="$(dirname -- "${0}")"
 
 SC_RELEASE_TAG="v$SC_VERSION"
 
