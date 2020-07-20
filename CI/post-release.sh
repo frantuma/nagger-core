@@ -55,7 +55,7 @@ $CUR/CI/publishRelease.py "$SC_RELEASE_TAG"
 #####################
 ### update the version to next snapshot in maven project with set version
 #####################
-./mvnw versions:set -DnewVersion=SC_NEXT_VERSION-SNAPSHOT
+./mvnw versions:set -DnewVersion="${SC_NEXT_VERSION}-SNAPSHOT"
 ./mvnw versions:commit
 
 #####################

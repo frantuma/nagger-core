@@ -1,3 +1,4 @@
+#!/bin/bash
 SC_LAST_RELEASE = $1
 SC_VERSION = $2
 
