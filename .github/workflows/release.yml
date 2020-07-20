@@ -83,7 +83,7 @@ jobs:
       if: env.RELEASE_OK == 'yes'
       run: |
         # . ./CI/publish-javadocs.sh
-        TMPDIR="$(dirname -- "${0}")/_temp"
+        TMPDIR="$(dirname -- "${0}")"
         . $TMPDIR/publish-javadocs.sh
     - name: Checkout master
       uses: actions/checkout@v2
