@@ -76,7 +76,8 @@ jobs:
         . ./CI/prepare-javadocs.sh
     - name: Checkout gh-pages
       uses: actions/checkout@v2
-      ref: "gh-pages"
+      with:
+        ref: "gh-pages"
     - name: Run publish javadocs script
       id: publishJavadocs
       if: env.RELEASE_OK == 'yes'
@@ -84,7 +85,8 @@ jobs:
         . ./CI/publish-javadocs.sh
     - name: Checkout master
       uses: actions/checkout@v2
-      ref: "master"
+      with:
+        ref: "master"
     - name: Run post release script
       id: postRelease
       if: env.RELEASE_OK == 'yes'
