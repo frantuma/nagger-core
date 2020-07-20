@@ -104,11 +104,29 @@ jobs:
         commit-message: bump snapshot ${{ env.SC_NEXT_VERSION }}-SNAPSHOT
         title: 'bump snapshot ${{ env.SC_NEXT_VERSION }}-SNAPSHOT'
         branch: bump-snap-${{ env.SC_NEXT_VERSION }}-SNAPSHOT
-    - name: Update V1 Readme
+    - name: Checkout 1.5
+      uses: actions/checkout@v2
+      with:
+        ref: "1.5"
+        fetch-depth: 0
+    - name: updateV1Readme script
       id: updateV1Readme
       if: env.RELEASE_OK == 'yes'
       run: |
-        . ./CI/trigger-updateV1Readme-Action.sh ${{ env.SC_VERSION }} ${{ env.SC_NEXT_VERSION }}
+        . ./CI/update-v1-readme.sh ${{ env.SC_VERSION }} ${{ env.SC_NEXT_VERSION }}
+    - name: Create Update V1 Readme Pull Request
+      uses: peter-evans/create-pull-request@v2
+      if: env.RELEASE_OK == 'yes'
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+        commit-message: update 1.5 Readme with new v2 version ${{ env.SC_VERSION }}
+        title: 'update 1.5 Readme with new v2 version ${{ env.SC_VERSION }}'
+        branch: update-v1-readme-${{ env.SC_VERSION }}
+    - name: Checkout master
+      uses: actions/checkout@v2
+      with:
+        ref: "master"
+        fetch-depth: 0
 
     env:
       MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
