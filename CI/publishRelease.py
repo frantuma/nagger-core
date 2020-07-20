@@ -100,10 +100,13 @@ def pretty(jcont):
     return json.dumps(jcont, sort_keys=True, indent=4, separators=(',', ': '))
 
 def lastReleaseId(tag):
-    content = readUrl('repos/frantuma/nagger-core/releases/tags/' + tag)
-    id = content["id"]
-    return id
-
+    content = readUrl('repos/frantuma/nagger-core/releases')
+    for l in content:
+        draft = l["draft"]
+        print str(draft)
+        draft_tag = l["tag_name"]
+        if str(draft) == 'True' and tag == draft_tag:
+            return l["id"]
 
 def publishRelease(tag):
     id = lastReleaseId(tag)
@@ -111,9 +114,9 @@ def publishRelease(tag):
     payload = "{\"tag_name\":\"" + tag + "\", "
     payload += "\"draft\":" + "false" + ", "
     payload += "\"target_commitish\":\"" + "master" + "\"}"
-    return payload
-    #content = postUrl('repos/frantuma/nagger-core/releases/' + str(id), payload)
-    #return content
+    print payload
+    content = postUrl('repos/frantuma/nagger-core/releases/' + str(id), payload)
+    return content
 
 def getReleases():
     content = readUrl('repos/frantuma/nagger-core/releases')
