@@ -107,11 +107,13 @@ def lastReleaseId(tag):
 
 def publishRelease(tag):
     id = lastReleaseId(tag)
+    print 'id ' + str(id)
     payload = "{\"tag_name\":\"" + tag + "\", "
     payload += "\"draft\":" + "false" + ", "
     payload += "\"target_commitish\":\"" + "master" + "\"}"
-    content = postUrl('repos/frantuma/nagger-core/releases/' + str(id), payload)
-    return content
+    return payload
+    #content = postUrl('repos/frantuma/nagger-core/releases/' + str(id), payload)
+    #return content
 
 def getReleases():
     content = readUrl('repos/frantuma/nagger-core/releases')
@@ -119,7 +121,8 @@ def getReleases():
 
 # main
 def main(tag):
-    publishRelease (tag)
+    print tag
+    print publishRelease (tag)
 
 # here start main
 main(sys.argv[1])
