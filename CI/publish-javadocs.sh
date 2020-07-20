@@ -43,4 +43,5 @@ ls $CUR/swagger-core/${SC_RELEASE_TAG}
 ls $CUR/swagger-core/${SC_RELEASE_TAG}/apidocs
 git add -A
 git commit -m "apidocs for release ${SC_RELEASE_TAG}"
-#git checkout master
+git push
+git push -u origin gh-pages

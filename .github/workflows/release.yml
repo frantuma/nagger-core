@@ -78,6 +78,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: "gh-pages"
+        fetch-depth: 0
     - name: Run publish javadocs script
       id: publishJavadocs
       if: env.RELEASE_OK == 'yes'
@@ -89,6 +90,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: "master"
+        fetch-depth: 0
     - name: Run post release script
       id: postRelease
       if: env.RELEASE_OK == 'yes'
