@@ -30,18 +30,24 @@ SC_RELEASE_TAG="v$SC_VERSION"
 #####################
 ### publish javadocs
 #####################
-cd modules/swagger-annotations
-../../mvnw org.apache.maven.plugins:maven-scm-publish-plugin:publish-scm \
-  -Dscmpublish.username="${GH_USER}" \
-  -Dscmpublish.password="${GH_TOKEN}" \
-  -Dscmpublish.skipDeletedFiles=true \
-  -Dscmpublish.checkoutDirectory=target/scmpublish \
-  -Dscmpublish.checkinComment="Publishing javadoc for swagger-annotations:$SC_VERSION" \
-  -Dscmpublish.content=target/javadocprep \
-  -Dscmpublish.pubScmUrl=scm:git:https://github.com/frantuma/nagger-core \
-  -Dscmpublish.scmBranch=gh-pages
 
-cd ../..
+git status
+
+
+
+#cd modules/swagger-annotations
+
+# ../../mvnw org.apache.maven.plugins:maven-scm-publish-plugin:publish-scm \
+#   -Dscmpublish.username="${GH_USER}" \
+#   -Dscmpublish.password="${GH_TOKEN}" \
+#   -Dscmpublish.skipDeletedFiles=true \
+#   -Dscmpublish.checkoutDirectory=target/scmpublish \
+#   -Dscmpublish.checkinComment="Publishing javadoc for swagger-annotations:$SC_VERSION" \
+#   -Dscmpublish.content=target/javadocprep \
+#   -Dscmpublish.pubScmUrl=scm:git:https://github.com/frantuma/nagger-core \
+#   -Dscmpublish.scmBranch=gh-pages
+
+#cd ../..
 #####################
 ### deploy gradle plugin release
 #####################
