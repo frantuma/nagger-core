@@ -48,7 +48,7 @@ jobs:
         fi
         echo "::set-env name=SC_VERSION::$SC_VERSION"
         echo "::set-env name=SC_NEXT_VERSION::$SC_NEXT_VERSION"
-    - name: Create Pull Request
+    - name: Create Prepare Release Pull Request
       uses: peter-evans/create-pull-request@v2
       if: env.PREPARE_RELEASE_OK == 'yes'
       with:
@@ -59,11 +59,7 @@ jobs:
     env:
       MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-      GH_USER: ${{ secrets.GH_USER }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_USER: ${{ secrets.GITHUB_USER }}
-      SC_TEST: ${{ secrets.SC_TEST }}
-      GH_CRED_64: ${{ secrets.GH_CRED_64 }}
       SC_VERSION:
       SC_NEXT_VERSION:
 

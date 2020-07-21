@@ -16,6 +16,16 @@ These actions use available actions in combination with short bash scripts.
 ### Release
 
 Releases are semi-automated and consist in 2 actions using available public actions in combination with bash and python scripts.
+**TODO**: Python code is used for historical reasons to execute GitHub APIs calls, in general a more consistent environment would
+be more maintainable e.g. implementing a custom JavaScript or Docker Container GitHub Action and/or a bash only script(s).
+
+#### Workflow summary
+
+1. execute `prepare-release.yml` / `Prepare Release` for `master` branch
+1. check and merge the Prepare Release PR pushed by previous step. Delete the branch
+1. execute `release.yml` / `Release` for `master` branch
+1. check and merge the `1.5` branch Readme update PR pushed by previous step. Delete the branch
+1. check and merge the next snaphot PR pushed by previous step. Delete the branch
 
 #### Prepare Release
 
@@ -32,7 +42,7 @@ and clicking `Run Workflow` (or `Prepare Release V1` and selecting `1.5` in the 
 * bump versions to release, and update all affected files
 * build and test maven
 * build and test gradle plugin
-* push a Pull Re`quest with the changes for human check.
+* push a Pull Request with the changes for human check.
 
 After the PR checks complete, the PR can me merged, and the second phase `Release` started.
 
@@ -46,12 +56,16 @@ and clicking `Run Workflow` (or `Release V1` and selecting `1.5` in the dropdown
 
 `Release` takes care of:
 
-* create release notes out of merged PRs
-* Draft a release with related tag
-* bump versions to release, and update all affected files
 * build and test maven
 * build and test gradle plugin
-* push a Pull Re`quest with the changes for human check.
+* deploy/publish to maven central
+* publish javadocs to gh-pages
+* deploy/publish gradle plugin
+* publish the previously prepared GitHub release / tag
+* push PR for next snapshot
+* push PR for 1.5 Readme update with new v2 version
+* update Wiki with javadocs links to new version
+
 
 
 ### Secrets
@@ -65,7 +79,14 @@ The GitHub App must be configured as detailed in [this doc]()https://github.com/
 
 See also [here](https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#triggering-further-workflow-runs)
 
-* `GH_USER`
+* `OSSRH_GPG_PRIVATE_KEY` and `OSSRH_GPG_PRIVATE_PASSPHRASE` : gpg key and passphrase to be used for sonatype releases
+GPG private key and passphrase defined to be used for sonatype deployments, as detailed in
+https://central.sonatype.org/pages/working-with-pgp-signatures.html (I'd say with email matching the one  of the sonatype account of point 1
+
+* `OSSRH_USERNAME` and `OSSRH_TOKEN`: sonatype user/token
+
+* `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET`: credentials for https://plugins.gradle.org/
+
 
 
 

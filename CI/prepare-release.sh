@@ -14,15 +14,7 @@ SC_LAST_RELEASE=2.1.3
 ##################################
 
 
-echo "GHUSER $GH_USER"
-echo "version $SC_VERSION"
-echo "qual $SC_QUALIFIER"
-echo "last $SC_LAST_RELEASE"
-echo "next $SC_NEXT_VERSION"
-
 CUR=$(pwd)
-SCRIPTDIR="$(dirname -- "${0}")/"
-BASEDIR="$SCRIPTDIR/../"
 
 SC_RELEASE_TITLE="Swagger-core $SC_VERSION released!"
 SC_RELEASE_TAG="v$SC_VERSION"

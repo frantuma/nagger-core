@@ -64,7 +64,7 @@ jobs:
       uses: samuelmeuli/action-maven-publish@v1
       if: env.RELEASE_OK == 'yes'
       with:
-        gpg_private_key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY_NO_ESCAPE }}
+        gpg_private_key: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
         gpg_passphrase: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
         nexus_username: ${{ secrets.OSSRH_USERNAME }}
         nexus_password: ${{ secrets.OSSRH_TOKEN }}
@@ -83,7 +83,6 @@ jobs:
       id: publishJavadocs
       if: env.RELEASE_OK == 'yes'
       run: |
-        # . ./CI/publish-javadocs.sh
         TMPDIR="$(dirname -- "${0}")"
         . $TMPDIR/publish-javadocs.sh
     - name: Checkout master
@@ -123,6 +122,21 @@ jobs:
         commit-message: update 1.5 Readme with new v2 version ${{ env.SC_VERSION }}
         title: 'update 1.5 Readme with new v2 version ${{ env.SC_VERSION }}'
         branch: update-v1-readme-${{ env.SC_VERSION }}
+    - name: Checkout Wiki
+      uses: actions/checkout@v2
+      with:
+        repository: frantuma/nagger-core.wiki
+        token: ${{ steps.generate-token.outputs.token }}
+        path: wiki
+        ref: "master"
+        fetch-depth: 0
+
+    - name: Run update wiki script
+      id: updateWiki
+      if: env.RELEASE_OK == 'yes'
+      run: |
+        TMPDIR="$(dirname -- "${0}")"
+        . $TMPDIR/update-wiki.sh
     - name: Checkout master
       uses: actions/checkout@v2
       with:
@@ -132,15 +146,10 @@ jobs:
     env:
       MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-      GH_USER: ${{ secrets.GH_USER }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_USER: ${{ secrets.GITHUB_USER }}
-      SC_TEST: ${{ secrets.SC_TEST }}
-      GH_CRED_64: ${{ secrets.GH_CRED_64 }}
       SC_VERSION:
       SC_NEXT_VERSION:
-      GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY_NO_ESCAPE }}
-      GPG_PRIVATE_KEY_ESCAPE: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
+      GPG_PRIVATE_KEY: ${{ secrets.OSSRH_GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PRIVATE_PASSPHRASE }}
       GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
       GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}

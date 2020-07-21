@@ -3,8 +3,6 @@ SC_LAST_RELEASE="$1"
 SC_VERSION="$2"
 
 CUR=$(pwd)
-SCRIPTDIR="$(dirname -- "${0}")/"
-BASEDIR="$SCRIPTDIR/../"
 
 #####################
 ### update v2 versions in redme

@@ -1,43 +1,9 @@
 #!/bin/bash
-#export SC_VERSION=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}' --non-recursive build-helper:parse-version org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-#export SC_NEXT_VERSION=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}' --non-recursive build-helper:parse-version org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-#SC_QUALIFIER=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${parsedVersion.qualifier}' --non-recursive build-helper:parse-version org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-#SC_LAST_RELEASE=`./mvnw -q -Dexec.executable="echo" -Dexec.args='${releasedVersion.version}' --non-recursive build-helper:released-version org.codehaus.mojo:exec-maven-plugin:1.3.1:exec`
-
-##################################
-##################################
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# !!!!!!!! removE !!!!!!!!!!!!!!!!!!!!!
-# SC_LAST_RELEASE=2.1.3
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-##################################
-##################################
-
-
-echo "GPG_PASSPHRASE $GPG_PASSPHRASE"
-echo "GHUSER $GH_USER"
-echo "version $SC_VERSION"
-echo "qual $SC_QUALIFIER"
-echo "last $SC_LAST_RELEASE"
-echo "next $SC_NEXT_VERSION"
 
 CUR=$(pwd)
-SCRIPTDIR="$(dirname -- "${0}")/"
-BASEDIR="$SCRIPTDIR/../"
 TMPDIR="$(dirname -- "${0}")"
 
 SC_RELEASE_TAG="v$SC_VERSION"
-
-echo "CUR $CUR"
-echo "SCRIPTDIR $SCRIPTDIR"
-echo "BASEDIR $BASEDIR"
-
-
-#####################
-### update wiki
-#####################
-
-
 
 #####################
 ### deploy gradle plugin release
@@ -74,7 +40,9 @@ sc_find="name: 'swagger-jaxrs2', version:'$SC_VERSION"
 sc_replace="name: 'swagger-jaxrs2', version:'$SC_NEXT_VERSION-SNAPSHOT"
 sed -i -e "s/$sc_find/$sc_replace/g" $CUR/modules/swagger-gradle-plugin/src/test/java/io/swagger/v3/plugins/gradle/SwaggerResolveTest.java
 
+
+#####################
+### Copy scripts to temp folder, as they are not available when checking out different branch or repo
+#####################
 cp -a $CUR/CI/update-v1-readme.sh $TMPDIR/update-v1-readme.sh
-#####################
-### update wiki links
-#####################
+cp -a $CUR/CI/update-wiki.sh $TMPDIR/update-wiki.sh

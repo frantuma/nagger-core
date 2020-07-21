@@ -29,6 +29,7 @@
     </build>
     <profiles>
         <profile>
+            <!-- this is used during release (see CI/CI.md file for details) to prepare javadocs for publishing to gh-pages -->
             <id>release</id>
             <build>
                 <plugins>
@@ -75,30 +76,6 @@
                             </execution>
                         </executions>
                     </plugin>
-<!--
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-scm-publish-plugin</artifactId>
-                        <version>3.0.0</version>
-                        <configuration>
-                            <checkoutDirectory>${project.build.directory}/scmpublish</checkoutDirectory>
-                            <checkinComment>Publishing javadoc for ${project.artifactId}:${project.version}</checkinComment>
-                            <content>${project.build.directory}/javadocprep</content>
-                            <skipDeletedFiles>true</skipDeletedFiles>
-                            <pubScmUrl>scm:git:https://github.com/frantuma/nagger-core</pubScmUrl>
-                            <scmBranch>gh-pages</scmBranch>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>publish-javadocs</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>publish-scm</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
--->
                 </plugins>
             </build>
         </profile>

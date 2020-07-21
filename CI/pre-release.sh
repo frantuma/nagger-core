@@ -14,17 +14,7 @@ SC_LAST_RELEASE=2.1.3
 ##################################
 
 
-echo "GPG_PASSPHRASE $GPG_PASSPHRASE"
-echo "GHUSER $GH_USER"
-echo "version $SC_VERSION"
-echo "qual $SC_QUALIFIER"
-echo "last $SC_LAST_RELEASE"
-echo "next $SC_NEXT_VERSION"
-
 CUR=$(pwd)
-SCRIPTDIR="$(dirname -- "${0}")/"
-BASEDIR="$SCRIPTDIR/../"
-
 SC_RELEASE_TAG="v$SC_VERSION"
 
 
@@ -39,9 +29,3 @@ SC_RELEASE_TAG="v$SC_VERSION"
 cd ./modules/swagger-gradle-plugin
 ./gradlew build --info
 cd ../..
-
-#####################
-### deploy maven release TODO moved to acttion because of GPG issue
-#####################
-#./mvnw -Dgpg.passphrase=${GPG_PASSPHRASE} --no-transfer-progress -B deploy -Prelease --file pom.xml
-#./mvnw --no-transfer-progress -B install -Prelease --file pom.xml
