@@ -14,6 +14,7 @@ jobs:
     - name: Run Test Set Env
       id: test-set-env
       run: |
+        echo "AA=yes" >> $GITHUB_ENV
         export SC_VERSION="3.0.2-SNAPSHOT"
         echo "PREPARE_RELEASE_OK=yes" >> $GITHUB_ENV
         echo "SC_VERSION=$SC_VERSION" >> $GITHUB_ENV
@@ -21,6 +22,7 @@ jobs:
       id: test-read-env
       if: env.PREPARE_RELEASE_OK == 'yes'
       run: |
+        echo "AA: ${{ AA }}"
         echo "env.PREPARE_RELEASE_OK: ${{ env.PREPARE_RELEASE_OK }}"
         echo "env.SC_NEXT_VERSION: ${{ env.SC_NEXT_VERSION }}"
         echo "PREPARE_RELEASE_OK: ${{ PREPARE_RELEASE_OK }}"
