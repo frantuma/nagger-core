@@ -1,0 +1,35 @@
+name: Test Env Delete Me
+
+on:
+  workflow_dispatch:
+    branches: ["master"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Test Set Env
+      id: test-set-env
+      run: |
+        export SC_VERSION="3.0.2-SNAPSHOT"
+        echo "PREPARE_RELEASE_OK=yes" >> $GITHUB_ENV
+        echo "SC_VERSION=$SC_VERSION" >> $GITHUB_ENV
+    - name: Run test read env
+      id: test-read-env
+      if: env.PREPARE_RELEASE_OK == 'yes'
+      run: |
+        echo "env.PREPARE_RELEASE_OK: ${{ env.PREPARE_RELEASE_OK }}"
+        echo "env.SC_NEXT_VERSION: ${{ env.SC_NEXT_VERSION }}"
+        echo "PREPARE_RELEASE_OK: ${{ PREPARE_RELEASE_OK }}"
+        echo "SC_NEXT_VERSION: ${{ SC_NEXT_VERSION }}"
+
+    env:
+      MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SC_VERSION:
+      SC_NEXT_VERSION:
+
