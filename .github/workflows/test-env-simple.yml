@@ -22,11 +22,11 @@ jobs:
       id: test-read-env
       if: env.PREPARE_RELEASE_OK == 'yes'
       run: |
-        echo "AA: ${{ AA }}"
+        echo "AA: ${{ env.AA }}"
         echo "env.PREPARE_RELEASE_OK: ${{ env.PREPARE_RELEASE_OK }}"
         echo "env.SC_NEXT_VERSION: ${{ env.SC_NEXT_VERSION }}"
-        echo "PREPARE_RELEASE_OK: ${{ PREPARE_RELEASE_OK }}"
-        echo "SC_NEXT_VERSION: ${{ SC_NEXT_VERSION }}"
+        #echo "PREPARE_RELEASE_OK: ${{ PREPARE_RELEASE_OK }}"
+        #echo "SC_NEXT_VERSION: ${{ SC_NEXT_VERSION }}"
 
     env:
       MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
