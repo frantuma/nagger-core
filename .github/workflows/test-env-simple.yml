@@ -24,7 +24,7 @@ jobs:
       run: |
         echo "AA: ${{ env.AA }}"
         echo "env.PREPARE_RELEASE_OK: ${{ env.PREPARE_RELEASE_OK }}"
-        echo "env.SC_NEXT_VERSION: ${{ env.SC_NEXT_VERSION }}"
+        echo "env.SC_VERSION: ${{ env.SC_VERSION }}"
 
     env:
       MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
